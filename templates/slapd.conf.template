@@ -1,0 +1,22 @@
+include         /usr/local/etc/openldap/schema/core.schema
+include         /usr/local/etc/openldap/schema/cosine.schema
+include         /usr/local/etc/openldap/schema/inetorgperson.schema
+
+pidfile         /var/run/slapd.pid
+argsfile        /var/run/slapd.args
+
+loglevel        none
+modulepath      /usr/local/libexec/openldap
+moduleload      back_mdb
+
+TLSCertificateFile /etc/openldap/certs/ldap.crt
+TLSCertificateKeyFile /etc/openldap/certs/ldap.key
+TLSCACertificatePath /etc/openldap/certs
+
+database        mdb
+maxsize         1073741824
+suffix          "${BASE_DN}"
+rootdn          "cn=admin,${BASE_DN}"
+rootpw          ${HASHED_PASSWORD}
+directory       /var/lib/ldap
+index           objectClass eq

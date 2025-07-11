@@ -1,0 +1,17 @@
+services:
+  openldap:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: rocky-openldap:latest
+#    ports:
+#      - "389:389"
+#      - "636:636"
+    env_file: .env
+    volumes:
+      - ./data:/var/lib/ldap
+      - ./config:/etc/openldap/slapd.d
+      - ./certs:/etc/openldap/certs
+    extra_hosts:
+      - "helpmesee.org:127.0.0.1"
+    restart: unless-stopped

@@ -1,0 +1,13 @@
+dn: ${BASE_DN}
+objectClass: top
+objectClass: dcObject
+objectClass: organization
+o: ${ORGANIZATION}
+dc: ${DC_PART}
+
+dn: cn=admin,${BASE_DN}
+objectClass: simpleSecurityObject
+objectClass: organizationalRole
+cn: admin
+description: Directory Admin
+userPassword: ${ADMIN_PASSWORD}

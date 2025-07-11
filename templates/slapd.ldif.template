@@ -1,0 +1,20 @@
+dn: cn=config
+objectClass: olcGlobal
+cn: config
+olcPidFile: /var/run/slapd.pid
+olcArgsFile: /var/run/slapd.args
+olcLogLevel: none
+olcTLSCertificateFile: /etc/openldap/certs/ldap.crt
+olcTLSCertificateKeyFile: /etc/openldap/certs/ldap.key
+olcTLSCACertificatePath: /etc/openldap/certs
+
+dn: olcDatabase={0}mdb,cn=config
+objectClass: olcDatabaseConfig
+objectClass: olcMdbConfig
+olcDatabase: {0}mdb
+olcDbDirectory: /var/lib/ldap
+olcSuffix: ${BASE_DN}
+olcRootDN: cn=admin,${BASE_DN}
+olcRootPW: ${HASHED_PASSWORD}
+olcDbIndex: objectClass eq
+olcDbMaxSize: 1073741824
