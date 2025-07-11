@@ -41,17 +41,16 @@ if ! slapadd -u -v -F /etc/openldap/slapd.d -n 1 -l /tmp/bootstrap.ldif; then
     exit 1
 fi
 
-echo "[INFO] Importing bootstrap.ldif..."
-if ! slapadd -q -F /etc/openldap/slapd.d -n 1 -l /tmp/bootstrap.ldif; then
-    echo "[ERROR] bootstrap import failed – giving up"
-    exit 1
-fi
-
-# Import initial data
+# Import initial data only when the database directory is empty
 DB_DIR="/var/lib/ldap"
 if [ -z "$(ls -A "$DB_DIR")" ]; then
-  echo "[INFO] Populating LDAP database..."
-  slapadd -F /etc/openldap/slapd.d -n 1 -l /tmp/bootstrap.ldif
+  echo "[INFO] Importing bootstrap.ldif..."
+  if ! slapadd -q -F /etc/openldap/slapd.d -n 1 -l /tmp/bootstrap.ldif; then
+      echo "[ERROR] bootstrap import failed – giving up"
+      exit 1
+  fi
+else
+  echo "[INFO] Existing LDAP database found, skipping bootstrap import"
 fi
 
 chown -R ldap:ldap /etc/openldap /var/lib/ldap
