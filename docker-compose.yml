@@ -12,6 +12,4 @@ services:
       - ./data:/var/lib/ldap
       - ./config:/etc/openldap/slapd.d
       - ./certs:/etc/openldap/certs
-    extra_hosts:
-      - "helpmesee.org:127.0.0.1"
     restart: unless-stopped
